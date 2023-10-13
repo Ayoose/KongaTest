@@ -13,23 +13,14 @@ import org.testng.annotations.Test;
 public class LoginTest {
 
     private WebDriver webDriver;
-
-
-    private By ModalButton = By.xpath("//]/div/div[2]/div[3]/div[2]/div/button");
-    private By ModalCardbutton = By.xpath("//*[@id=\"channel-template\"]/div[2]/div/div[2]/button/div/span[1]");
-    private By ModalCardNumber = By.id("card-number");
-    private By ModalDate = By.id("expiry");
-    private By ModalCVV = By.id("id=\"cvv\"");
-    private By ModalPayNowButton = By.id("validateCardForm");
-    private By CloseIframe = By.xpath("/html/body/section/section/section/div[2]/div[1]/aside");
-
+    
     @BeforeTest
     public void setUp() throws InterruptedException {
 
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
 
         //to fix the error "data;" URL onLaunch
-        WebDriverManager.chromedriver().setup();
+        //WebDriverManager.chromedriver().setup(); //comment to fix old version of chromedriver starting instead of new version
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
 
@@ -81,7 +72,7 @@ public class LoginTest {
         Thread.sleep(2000);
 
         //To input password
-        webDriver.findElement(By.id("password")).sendKeys("waferanmi");
+        webDriver.findElement(By.id("password")).sendKeys("******");
 
         //2 seconds delay for page load
         Thread.sleep(2000);
@@ -117,7 +108,6 @@ public class LoginTest {
 
         //Verify current page
         if (webDriver.getCurrentUrl().contains("https://www.konga.com/category/accessories-computing-5227"))
-        //if (webDriver.getCurrentUrl().contains("https://www.konga.com/"))
             //Pass
             System.out.println("You are viewing computer and accessories webpage");
         else
@@ -149,8 +139,7 @@ public class LoginTest {
     @Test(priority = 3)
     public void clickAppleMacBooks() throws InterruptedException {
 
-        WebElement myAppleMacBooks = webDriver.findElement(By.xpath("/html/body/div[1]/div/section/div[3]/section/main/section[3]/section/div/section/div[2]/div[2]/ul/li[3]/a/ul/li[1]/a/label/span"));
-        myAppleMacBooks.click();
+        webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/div/section/div[2]/div[2]/ul/li[3]/a/ul/li[1]/a/label/span")).click();
         if (webDriver.getCurrentUrl().contains("https://www.konga.com/category/accessories-computing-5227"))
             //Pass
             System.out.println("You are viewing Apple MacBooks webpage");
@@ -164,7 +153,9 @@ public class LoginTest {
     @Test(priority = 4)
     public void itemCart() throws InterruptedException {
 
-        webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/section/section/section/ul/li[1]/div/div/div[2]/form/div[3]/button")).click();
+        //webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/section/section/section/ul/li[1]/div/div/div[2]/form/div[3]/button")).click();
+        WebElement myClickMac = webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/section/section/section/ul/li[2]/div/div/div[2]/form/div[3]/button"));
+        myClickMac.click();
         if (webDriver.getCurrentUrl().contains("https://www.konga.com/category/accessories-computing-5227"))
             //Pass
             System.out.println("MacBook has been added to your cart");
@@ -202,10 +193,10 @@ public class LoginTest {
         String actualUrl = webDriver.getCurrentUrl();
         if (actualUrl.contains(expectedUrl))
             //Pass
-            System.out.println("contain checkout button");
+            System.out.println("Page contains checkout button");
         else
             //Fail
-            System.out.println("not contain checkout button");
+            System.out.println("Page does not contain checkout button");
         Thread.sleep(5000);
     }
 
@@ -233,29 +224,15 @@ public class LoginTest {
         //Use selected address
         webDriver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[3]/div/div/div/a")).click();
         Thread.sleep(5000);
-    }
 
-    /*
-    @Test(priority = 8)
-    public void AddDeliveryaddress() throws InterruptedException {
-//7.click on add delivery address
-        webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[2]/div[1]/div[2]/div[1]/div/button")).click();
-//Select address from address book
-        webDriver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[2]/div/div/div[2]/div[1]/form/button")).click();
-        Thread.sleep(5000);
+        System.out.println("Changed Delivery Address");
     }
-
-    @Test(priority = 9)
-    public void UseThisAddress() throws InterruptedException {
-//click on use this address
-        webDriver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[2]/section/section/aside/div[3]/div/div/div/a")).click();
-        Thread.sleep(5000);
-    } */
 
     @Test(priority = 8)
     public void selectCardPayment() throws InterruptedException {
 //9.select a card payment method:"Pay Now"
-        webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[1]/div[1]/h2")).click();
+        webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[1]/div[1]/span/input")).click();
+        System.out.println("Chose \"Pay Now Payment\" Option");
         Thread.sleep(5000);
     }
 
@@ -263,47 +240,64 @@ public class LoginTest {
     public void ContinueToPayment() throws InterruptedException {
 //10. click on continue to payment button
         webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[3]/div[2]/div/button")).click();
+        System.out.println("Clicked \"Continue to Payment\" Button");
         Thread.sleep(5000);
 
     }
+
     @Test(priority = 10)
-    public void ClickCard() throws InterruptedException {
-        //click card
-        click(ModalButton);
+    public void chooseCardPaymentMethod() throws InterruptedException {
+
+        webDriver.switchTo().frame("kpg-frame-component");
+        //click(cardPaymentButton);
+
+        //For complete frame load
+        Thread.sleep(2000);
+
+        //Choose Card Payment Method
+        webDriver.findElement(By.xpath("//*[@id=\"channel-template\"]/div[2]/div/div[2]/button")).click();
+        System.out.println("Clicked Card Payment Method");
+        Thread.sleep(5000);
+
     }
 
     @Test(priority = 13)
     public void EnterCardDetails() throws InterruptedException {
 //input invalid card number
 //Test 8. verify that user should not input invalid card number on the field for card number for payment
-        setText(ModalCardNumber, 12345678);
-        setText(ModalDate, 02 / 25);
-        setText(ModalCVV, 205);
-        click(ModalPayNowButton);
+
+        //Input value in Card Number TextBox
+        webDriver.findElement(By.id("card-number")).sendKeys("12345678");
+        System.out.println("Input invalid card number");
+
+        //Input value in Card Expiry TextBox
+        webDriver.findElement(By.id("expiry")).sendKeys("1128");
+        System.out.println("Input invalid expiry date");
+
+        //Input value in CVV TextBox
+        webDriver.findElement(By.id("cvv")).sendKeys("123");
+        System.out.println("Input invalid cvv");
+
+        //Click "Pay Now" Button
+        webDriver.findElement(By.id("validateCardForm")).click();
+
         String expectedUrl = "https://www.konga.com/checkout/complete-order";
         String actualUrl = webDriver.getCurrentUrl();
         if (actualUrl.contains(expectedUrl))
             //Pass
-            System.out.println("invalid card number");
+            System.out.println("Unable to proceed checkout \"Invalid Card Number\"");
         else
             //Fail
-            System.out.println("valid card number");
+            System.out.println("You input a valid card number");
         Thread.sleep(5000);
     }
 
     @Test(priority = 14)
     public void closeiframe() throws InterruptedException {
 //12. close the iframe that displays the input card modal
-        click(CloseIframe);
+        webDriver.findElement(By.xpath("/html/body/section/section/section/div[2]/div[1]/aside")).click();
         Thread.sleep(5000);
     }
-    private void setText(By modalCardNumber, int i) {
-    }
-
-    private void click(By modalButton) {
-    }
-
-
 
     @AfterTest
     public void closeBrowser() {
