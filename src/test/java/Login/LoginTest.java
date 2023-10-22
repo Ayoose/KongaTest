@@ -72,7 +72,7 @@ public class LoginTest {
         Thread.sleep(2000);
 
         //To input password
-        webDriver.findElement(By.id("password")).sendKeys("******");
+        webDriver.findElement(By.id("password")).sendKeys("waferanmi");
 
         //2 seconds delay for page load
         Thread.sleep(2000);
@@ -261,13 +261,13 @@ public class LoginTest {
 
     }
 
-    @Test(priority = 13)
+    @Test(priority = 11)
     public void EnterCardDetails() throws InterruptedException {
 //input invalid card number
 //Test 8. verify that user should not input invalid card number on the field for card number for payment
 
         //Input value in Card Number TextBox
-        webDriver.findElement(By.id("card-number")).sendKeys("12345678");
+        webDriver.findElement(By.id("card-number")).sendKeys("1234567890");
         System.out.println("Input invalid card number");
 
         //Input value in Card Expiry TextBox
@@ -292,7 +292,7 @@ public class LoginTest {
         Thread.sleep(5000);
     }
 
-    @Test(priority = 14)
+    @Test(priority = 12)
     public void closeiframe() throws InterruptedException {
 //12. close the iframe that displays the input card modal
         webDriver.findElement(By.xpath("/html/body/section/section/section/div[2]/div[1]/aside")).click();
