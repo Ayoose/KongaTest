@@ -44,8 +44,9 @@ public class LoginTest {
         Thread.sleep(7000);
 
         //To click the Login slider button
-        webDriver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div/div/div/div[4]/a")).click();
+        //webDriver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div/div/div/div[4]/a")).click();
 
+        webDriver.findElement(By.xpath("//*[@id=\"__next\"]/div/section/div[3]/nav/div/div[1]/div/div/div[4]/a")).click();
         //5 seconds delay for page load
         Thread.sleep(5000);
 
@@ -268,6 +269,7 @@ public class LoginTest {
 
         //Input value in Card Number TextBox
         webDriver.findElement(By.id("card-number")).sendKeys("1234567890");
+        //webDriver.findElement(By.id("card-number")).sendKeys("1234567890");
         System.out.println("Input invalid card number");
 
         //Input value in Card Expiry TextBox
