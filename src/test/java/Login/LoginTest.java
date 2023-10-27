@@ -44,20 +44,11 @@ public class LoginTest {
         Thread.sleep(7000);
 
         //To click the Login slider button
-        //webDriver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div/div/div/div[4]/a")).click();
+        webDriver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div/div/div/div[4]/a")).click();
 
-        webDriver.findElement(By.xpath("//*[@id=\"__next\"]/div/section/div[3]/nav/div/div[1]/div/div/div[4]/a")).click();
+        //webDriver.findElement(By.xpath("//*[@id=\"__next\"]/div/section/div[3]/nav/div/div[1]/div/div/div[4]/a")).click();
         //5 seconds delay for page load
         Thread.sleep(5000);
-
-        //To Logout user
-        //webDriver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div/div/div/div[4]/div/a/span")).click();
-
-        //3 seconds delay for page load
-        //Thread.sleep(3000);
-
-        //Clicking Logout Button
-        //webDriver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div/div/div/div[4]/div/ul/li[7]/a")).click();
 
     }
 
@@ -84,6 +75,7 @@ public class LoginTest {
         //5 seconds delay for successful login
         Thread.sleep(5000);
 
+        //Verify current page
         if (webDriver.getCurrentUrl().contains("https://www.konga.com/"))
             //Pass
             System.out.println("successful login");
@@ -115,7 +107,9 @@ public class LoginTest {
             //Fail
             System.out.println("You are on a wrong webpage");
 
+        //Print out current URL
         System.out.println(webDriver.getCurrentUrl());
+
         Thread.sleep(5000);
     }
 
@@ -123,6 +117,7 @@ public class LoginTest {
     @Test(priority = 2)
     public void clickLaptop() throws InterruptedException {
 
+        //Click Laptop subcategory
         WebElement myLaptop = webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/div/section/div[2]/div[2]/ul/li[3]/a/label/span"));
         myLaptop.click();
 
@@ -140,13 +135,16 @@ public class LoginTest {
     @Test(priority = 3)
     public void clickAppleMacBooks() throws InterruptedException {
 
+        //Click Apple Macbook from list
         webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/section[3]/section/div/section/div[2]/div[2]/ul/li[3]/a/ul/li[1]/a/label/span")).click();
+
         if (webDriver.getCurrentUrl().contains("https://www.konga.com/category/accessories-computing-5227"))
             //Pass
             System.out.println("You are viewing Apple MacBooks webpage");
         else
             //Fail
             System.out.println("You are on a wrong webpage");
+
         Thread.sleep(5000);
     }
 
@@ -163,6 +161,7 @@ public class LoginTest {
         else
             //Fail
             System.out.println("MacBook failed to be added to cart");
+
         Thread.sleep(5000);
     }
 
@@ -170,16 +169,19 @@ public class LoginTest {
     public void viewCart() throws InterruptedException {
 
         //To view my cart
-
         webDriver.findElement(By.xpath("//*[@id=\"nav-bar-fix\"]/div[1]/div/div/a[2]/span[1]")).click();
+
+        //To compare current url to the expected url
         String expectedUrl = "https://www.konga.com/category/accessories-computing-5227";
         String actualUrl = webDriver.getCurrentUrl();
+
         if (actualUrl.contains(expectedUrl))
             //Pass
             System.out.println("You are viewing your cart");
         else
             //Fail
             System.out.println("Error viewing cart");
+
         Thread.sleep(5000);
     }
 
@@ -188,16 +190,20 @@ public class LoginTest {
 
         //To check out cart
 
-        //Click continue to checkout button
+        //Click "continue to checkout" button
         webDriver.findElement(By.xpath("//*[@id=\"app-content-wrapper\"]/div[3]/section/section/aside/div[3]/div/div[2]/button")).click();
+
+        //To compare current url to the expected url
         String expectedUrl = "https://www.konga.com/category/accessories-computing-5227";
         String actualUrl = webDriver.getCurrentUrl();
+
         if (actualUrl.contains(expectedUrl))
             //Pass
             System.out.println("Page contains checkout button");
         else
             //Fail
             System.out.println("Page does not contain checkout button");
+
         Thread.sleep(5000);
     }
 
@@ -208,13 +214,13 @@ public class LoginTest {
         //10 seconds delay for complete page load
         Thread.sleep(10000);
 
-        //Click change address
+        //Click "change address"
         webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div/div[2]/div/button")).click();
 
         //2 seconds delay
         Thread.sleep(2000);
 
-        //Click add address
+        //Click "add address"
         webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[1]/div/div/div[2]/div/div[2]/div/div/button")).click();
         Thread.sleep(5000);
 
@@ -231,24 +237,32 @@ public class LoginTest {
 
     @Test(priority = 8)
     public void selectCardPayment() throws InterruptedException {
-//9.select a card payment method:"Pay Now"
+
+        //Select card payment method:"Pay Now"
         webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[1]/div[1]/span/input")).click();
+
         System.out.println("Chose \"Pay Now Payment\" Option");
+
         Thread.sleep(5000);
     }
 
     @Test(priority = 9)
     public void ContinueToPayment() throws InterruptedException {
-//10. click on continue to payment button
+
+        //Click on "Continue to Payment" button
         webDriver.findElement(By.xpath("//*[@id=\"mainContent\"]/div/form/div/div[1]/section[2]/div/div[2]/div[3]/div[2]/div/button")).click();
+
+        //Print out on console
         System.out.println("Clicked \"Continue to Payment\" Button");
-        Thread.sleep(5000);
+
+        Thread.sleep(7000);
 
     }
 
     @Test(priority = 10)
     public void chooseCardPaymentMethod() throws InterruptedException {
 
+        //To switch webdriver focus to the iFrame
         webDriver.switchTo().frame("kpg-frame-component");
         //click(cardPaymentButton);
 
@@ -269,25 +283,23 @@ public class LoginTest {
 
         //Input value in Card Number TextBox
         webDriver.findElement(By.id("card-number")).sendKeys("1234567890");
-        //webDriver.findElement(By.id("card-number")).sendKeys("1234567890");
-        System.out.println("Input invalid card number");
+        System.out.println("You have input an invalid card number");
 
         //Input value in Card Expiry TextBox
         webDriver.findElement(By.id("expiry")).sendKeys("1128");
-        System.out.println("Input invalid expiry date");
 
         //Input value in CVV TextBox
         webDriver.findElement(By.id("cvv")).sendKeys("123");
-        System.out.println("Input invalid cvv");
 
         //Click "Pay Now" Button
         webDriver.findElement(By.id("validateCardForm")).click();
 
+        //To compare current url to the expected url
         String expectedUrl = "https://www.konga.com/checkout/complete-order";
         String actualUrl = webDriver.getCurrentUrl();
         if (actualUrl.contains(expectedUrl))
             //Pass
-            System.out.println("Unable to proceed checkout \"Invalid Card Number\"");
+            System.out.println("Unable to proceed checkout, reason :\"Invalid Card Number\"");
         else
             //Fail
             System.out.println("You input a valid card number");
@@ -296,8 +308,10 @@ public class LoginTest {
 
     @Test(priority = 12)
     public void closeiframe() throws InterruptedException {
-//12. close the iframe that displays the input card modal
+        //Close the iframe
         webDriver.findElement(By.xpath("/html/body/section/section/section/div[2]/div[1]/aside")).click();
+
+        System.out.println("iFrame has been closed");
         Thread.sleep(5000);
     }
 
@@ -305,6 +319,7 @@ public class LoginTest {
     public void closeBrowser() {
         //Quit browser
         webDriver.quit();
+        System.out.println("Chrome browser closed");
     }
 
 }
